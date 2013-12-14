@@ -1,0 +1,27 @@
+﻿@model DodgingBranchesMVC5.Models.EditRouteViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create","Route",FormMethod.Post))
+{
+    @Html.ValidationSummary(false)
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name)
+    </div>
+    <div>
+        @Html.LabelFor(x=> x.Description)
+        @Html.TextAreaFor(x=> x.Description)
+    </div>
+    <div>
+       @Html.EditorFor(x => x.Addr)
+    </div>
+
+    <input type="submit"  name="submit" value="Submit" />
+}
+

@@ -1,0 +1,82 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.homeImage
+{
+    /*float:left;*/
+    /*background-image: url('images/home-sml.png');*/
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    padding-top:20px;
+    background-repeat:no-repeat;
+}
+
+.homeText
+{
+    color:white;
+    padding-top:10px;
+    padding-right:2%;
+    position:absolute;
+    right:0px;
+    top:0px;
+    max-width:40%;
+    max-height:100%;
+    margin:auto;
+    top:2%;
+
+}
+
+.homeImage{
+    height:auto;
+    max-width:100%;
+    border: 0px none;
+}
+
+@media (max-width: 767px) {
+    .homeText 
+    {
+        position:static;
+        max-width:100%;
+        color:rgb(51, 51, 51);
+    }
+}

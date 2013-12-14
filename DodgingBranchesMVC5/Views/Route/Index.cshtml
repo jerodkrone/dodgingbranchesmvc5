@@ -1,0 +1,78 @@
+﻿@model DodgingBranchesMVC5.Models.RoutesViewModel
+
+@{
+    ViewBag.Title = "Routes Near You";
+}
+
+@section header
+{
+    <style>
+        .routeTag 
+        {
+            float: left;
+            padding-left: 5px;
+        }
+
+        .routeItem
+        {
+            padding-bottom: 10px;
+        }
+    </style>
+}
+
+<h2>Routes Near You (@Model.Location)</h2>
+
+<button id="createNewRoute" style="margin-bottom:10px;">Create New Route</button>
+
+<div class="routeMenuBanner"></div>
+
+<div class="routeDisplayArea">
+    @foreach (var item in Model.Routes)
+    {
+        <div class="row routeItem">
+            <div>
+                <div style="float:left;padding-right:10px">
+                    <div>
+                        <div class="ui-icon ui-icon-arrowthick-1-n"></div>
+                        <span>@item.Score</span>
+                        <div class="ui-icon ui-icon-arrowthick-1-s"></div>
+                    </div>
+                </div>
+                <div style="display:inline-block">
+                    <div style="">
+                        <span>@item.Name (map)</span>
+                    </div>
+
+                    <div>
+                        <span>@item.Description</span>
+                    </div>
+                    <div>
+                        <span>posted @item.DateEntered.ToString("MM/dd/yyyy") by @item.EnteredBy.UserName</span>
+                    </div>
+                    <span>comments(@item.Comments.Count)</span>
+                    <div>
+                        @foreach (var tag in item.Tags)
+                        {
+                            @Html.Partial("_TagListing", tag)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function(){
+            $('#createNewRoute').click(function(e) {
+                e.preventDefault();
+                var url = '@Url.Action("Create","Route")';
+                window.location.href = url;
+            });
+        });
+    </script>
+}
+
+

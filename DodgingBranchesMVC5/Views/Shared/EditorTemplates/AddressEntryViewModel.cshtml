@@ -1,0 +1,22 @@
+﻿@model DodgingBranchesMVC5.Models.AddressEntryViewModel
+
+<div>
+    @Html.LabelFor(x => x.Addr)
+    @Html.TextBoxFor(x => x.Addr)
+</div>
+<div>
+    @Html.LabelFor(x => x.City)
+    @Html.TextBoxFor(x => x.City)
+</div>
+<div>
+    @{
+        SelectList selectItems = new SelectList(Model.State,"Value","Text");
+    }
+
+    @Html.LabelFor(x => x.State, selectItems)
+    @Html.DropDownListFor(x => x.SelectedState, selectItems)
+</div>
+<div>
+    @Html.LabelFor(x => x.Zip)
+    @Html.TextBoxFor(x => x.Zip)
+</div>
