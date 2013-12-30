@@ -14,6 +14,7 @@ namespace DodgingBranchesMVC5.Models
             Comments = new List<Comment>();
             StartPoint = new RouteMapPoint();
             EndPoint = new RouteMapPoint();
+            Tags = new List<TagViewModel>();
         }
 
         public int Id { get; set; }
@@ -24,7 +25,7 @@ namespace DodgingBranchesMVC5.Models
         public string Description { get; set; }
         public int Score { get; set; }
         public List<TagViewModel> Tags { get; set; }
-        public ApplicationUser EnteredBy { get; set; }
+        public string EnteredBy { get; set; }
         public List<Comment> Comments { get; set; }
         public RouteMapPoint StartPoint { get; set; }
         public RouteMapPoint EndPoint { get; set; }
@@ -39,7 +40,7 @@ namespace DodgingBranchesMVC5.Models
 
     public class RouteMapPoint
     {
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }

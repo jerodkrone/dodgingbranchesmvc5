@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
 using DodgingBranches.Models;
+using DodgingBranches.Service;
 
 namespace DodgingBranchesMVC5.Mappers
 {
@@ -15,11 +16,19 @@ namespace DodgingBranchesMVC5.Mappers
         EditRouteViewModel MapEditDomainToModel(EditRouteViewModel model);
         EditRouteViewModel MapEditModelToDomain(EditRouteViewModel model,IPrincipal user);
 
-        RoutesViewModel MapDomainToModel();
+        RouteViewModel MapDetailsDomainToViewModel(int id);
+
+        RoutesViewModel MapDomainToModel(IPrincipal user);
     }
 
     public class RouteMapper : IRouteMapper
     {
+
+        IRouteService _routeService;
+        public RouteMapper(IRouteService routeService)
+        {
+            _routeService = routeService;
+        }
 
         public EditRouteViewModel MapEditDomainToModel(EditRouteViewModel model)
         {
@@ -32,11 +41,64 @@ namespace DodgingBranchesMVC5.Mappers
 
         public EditRouteViewModel MapEditModelToDomain(EditRouteViewModel model, IPrincipal user)
         {
-            model.EnteredBy = new ApplicationUser { 
-                UserName = user.Identity.Name
-            };
+
+
+            model.DateEntered = DateTime.Now;
+
+            DodgingBranches.Models.Route routeToAdd = MapViewModelToDomain(model);
+
+            _routeService.AddRoute(routeToAdd);
            
             return model;
+        }
+
+        private DodgingBranches.Models.Route MapViewModelToDomain(Models.EditRouteViewModel routeViewModel)
+        {
+            var returnRoute = new DodgingBranches.Models.Route();
+
+            returnRoute.Name = routeViewModel.Name;
+            returnRoute.RouteId = routeViewModel.Id;
+            returnRoute.StartPoint = new MapPoint { Latitude = routeViewModel.StartPoint.Latitude, Longitude = routeViewModel.StartPoint.Longitude };
+            returnRoute.EndPoint = new MapPoint { Latitude = routeViewModel.EndPoint.Latitude, Longitude = routeViewModel.EndPoint.Longitude };
+            returnRoute.UserId = routeViewModel.EnteredBy;
+
+            returnRoute.Comments = routeViewModel.Comments.Select(x=> new DodgingBranches.Models.Comment
+                {
+                    CommentId = x.Id,
+                    CommentText = x.CommentText,
+                    DateEntered = x.DateEntered,
+                    ParentCommentId = x.ParentCommentId,
+                    RouteId = x.RouteId,
+                    UserId = x.UserId
+                }).ToList();
+
+            returnRoute.DateEntered = routeViewModel.DateEntered;
+            returnRoute.Description = routeViewModel.Description;
+            returnRoute.StartLocation = new DodgingBranches.Models.Address
+            {
+                Address1 = routeViewModel.Addr.Addr,
+                City = routeViewModel.Addr.City,
+                AddressId = routeViewModel.Addr.AddressId,
+                State = routeViewModel.Addr.SelectedState,
+                ZipCode = routeViewModel.Addr.Zip
+            };
+
+            returnRoute.EndLocation = new DodgingBranches.Models.Address
+            {
+                Address1 = routeViewModel.EndAddr.Addr,
+                City = routeViewModel.EndAddr.City,
+                AddressId = routeViewModel.EndAddr.AddressId,
+                State = routeViewModel.EndAddr.SelectedState,
+                ZipCode = routeViewModel.EndAddr.Zip
+            };
+
+            returnRoute.Tags = routeViewModel.Tags.Select(x => new DodgingBranches.Models.Tag
+            {
+                TagId = x.Id,
+                TagText = x.TagName
+            }).ToList();
+
+            return returnRoute;
         }
 
         private void MapEditLists(EditRouteViewModel model)
@@ -53,54 +115,97 @@ namespace DodgingBranchesMVC5.Mappers
         }
 
 
-        public RoutesViewModel MapDomainToModel()
+        public RoutesViewModel MapDomainToModel(IPrincipal user)
         {
             var model = new RoutesViewModel();
 
             model.Location = "Minneapolis, MN";
-            model.Routes = new List<RouteViewModel>
+
+            var routes = _routeService.GetDefaultRoutesForUser(user.Identity.Name);
+
+            return BuildRoutesViewModel(routes);
+        }
+
+        private RoutesViewModel BuildRoutesViewModel(List<Route> routes)
+        {
+            var returnViewModel = new RoutesViewModel();
+
+            returnViewModel.Routes = new List<RouteViewModel>();
+
+            foreach (var route in routes)
             {
-                new RouteViewModel
+                returnViewModel.Routes.Add(BuildRouteViewModelFromDomain(route));
+            }
+
+            return returnViewModel;
+        }
+
+        private RouteViewModel BuildRouteViewModelFromDomain(DodgingBranches.Models.Route route)
+        {
+            var returnRoute = new RouteViewModel();
+
+            returnRoute.Name = route.Name;
+            returnRoute.Id = route.RouteId;
+            returnRoute.StartPoint = new RouteMapPoint { Latitude = route.StartPoint.Latitude, Longitude = route.StartPoint.Longitude } ;
+            returnRoute.EndPoint = new RouteMapPoint { Latitude = route.EndPoint.Latitude, Longitude = route.EndPoint.Longitude };
+            returnRoute.EnteredBy = route.UserId;
+
+            if (route.Comments != null)
+            {
+                returnRoute.Comments = route.Comments.Select(x => new Models.Comment
                 {
-                    Id=1,
-                    Description = "Cool Route",
-                    //EndLocation = null,
-                    //StartLocation = null,
-                    Name = "Cool Route",
-                    Score = 10,
-                    Addr = new AddressViewModel
-                    {
-                        Addr = "1 Test Street",
-                        City = "Buffalo",
-                        State = "MN",
-                        Zip = 55313
-                    },
-                    Tags = new List<TagViewModel>{new TagViewModel{Id=1, TagName="3-5 Miles"}, new TagViewModel{Id=2, TagName="Hills"}},
-                    DateEntered = new DateTime(2013,01,01),
-                    EnteredBy = new ApplicationUser{UserName="TestUser2"}
-                },
-                new RouteViewModel
-                {
-                    Id=2,
-                    Description = "Cool Route 2",
-                    //EndLocation = null,
-                    //StartLocation = null,
-                    Name = "Cool Route 2",
-                    Score = 10,
-                    Addr = new AddressViewModel
-                    {
-                        Addr = "2 Test Street",
-                        City = "SLP",
-                        State = "MN",
-                        Zip = 55416
-                    },
-                    Tags = new List<TagViewModel>{new TagViewModel{Id=3, TagName="5-7 Miles"}, new TagViewModel{Id=4, TagName="Flat"}},
-                    DateEntered = new DateTime(2012,01,01),
-                    EnteredBy = new ApplicationUser{UserName="TestUser1"}
-                }
+                    Id = x.CommentId,
+                    CommentText = x.CommentText,
+                    DateEntered = x.DateEntered,
+                    ParentCommentId = x.ParentCommentId,
+                    RouteId = x.RouteId,
+                    UserId = x.UserId
+                }).ToList();                
+            }
+
+            returnRoute.DateEntered = route.DateEntered;
+            returnRoute.Description = route.Description;
+            returnRoute.StartLocation = new Models.AddressViewModel
+            {
+                AddressLine1 = route.StartLocation.Address1,
+                City = route.StartLocation.City,
+                AddressId = route.StartLocation.AddressId,
+                State = route.StartLocation.State,
+                ZipCode = route.StartLocation.ZipCode
             };
 
-            return model;
+            returnRoute.EndLocation = new Models.AddressViewModel
+            {
+                AddressLine1 = route.EndLocation.Address1,
+                City = route.EndLocation.City,
+                AddressId = route.EndLocation.AddressId,
+                State = route.EndLocation.State,
+                ZipCode = route.EndLocation.ZipCode
+            };
+
+            if (route.Tags != null)
+            {
+                returnRoute.Tags = route.Tags.Select(x => new Models.TagViewModel
+                {
+                    Id = x.TagId,
+                    TagName = x.TagText
+                }).ToList();                
+            }
+
+
+            return returnRoute;
+
+        }
+
+        public RouteViewModel MapDetailsDomainToViewModel(int id)
+        {
+            var returnViewModel = new RouteViewModel();
+
+            var domainRoute = _routeService.GetRoute(id);
+
+            returnViewModel = BuildRouteViewModelFromDomain(domainRoute);
+
+            return returnViewModel;
         }
     }
 }

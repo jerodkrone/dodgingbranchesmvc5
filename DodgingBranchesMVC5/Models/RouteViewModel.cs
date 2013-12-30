@@ -8,6 +8,7 @@ namespace DodgingBranchesMVC5.Models
 {
     public class RouteViewModel : RouteViewModelBase
     {
-        public AddressViewModel Addr { get; set; }
+        public AddressViewModel StartLocation { get; set; }
+        public AddressViewModel EndLocation { get; set; }
     }
 }

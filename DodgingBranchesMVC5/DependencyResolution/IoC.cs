@@ -19,6 +19,7 @@
 using StructureMap;
 using DodgingBranches.Data;
 using DodgingBranches.Models;
+using DodgingBranches.Service;
 
 namespace DodgingBranchesMVC5.DependencyResolution {
     public static class IoC {
@@ -31,6 +32,7 @@ namespace DodgingBranchesMVC5.DependencyResolution {
                                         scan.Assembly("DodgingBranches.Data");
                                         scan.Assembly("Microsoft.AspNet.Identity.Core");
                                         scan.Assembly("Microsoft.AspNet.Identity.EntityFramework");
+                                        scan.Assembly("DodgingBranches.Service");
                                         scan.WithDefaultConventions();
                                     });
 

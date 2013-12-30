@@ -35,6 +35,9 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -82,6 +85,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\RouteControllerTest.cs" />
+    <Compile Include="Mappers\RouteMapperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -92,6 +97,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DodgingBranches.Models\DodgingBranches.Models.csproj">
+      <Project>{e428b791-1cdb-4e56-9afc-7dc46df622d6}</Project>
+      <Name>DodgingBranches.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DodgingBranches.Service\DodgingBranches.Service.csproj">
+      <Project>{d6b25162-35aa-4bbe-96ab-3b7c140e3f69}</Project>
+      <Name>DodgingBranches.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DodgingBranchesMVC5\DodgingBranchesMVC5.csproj">
       <Project>{702B081D-B973-4BFF-835A-03424DC96193}</Project>
       <Name>DodgingBranchesMVC5</Name>

@@ -140,6 +140,9 @@
     <Reference Include="WebActivator">
       <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.4\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -180,6 +183,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\FontAwesomeBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
@@ -210,6 +214,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\animated-overlay.gif" />
     <Content Include="Content\images\Facebook-login-button.png" />
     <Content Include="Content\images\home-sml.png" />
@@ -230,6 +236,7 @@
     <Content Include="Content\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -240,6 +247,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -255,7 +266,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -284,6 +297,7 @@
     <Content Include="Views\Route\Create.cshtml" />
     <Content Include="Views\Shared\_address.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AddressEntryViewModel.cshtml" />
+    <Content Include="Views\Route\RouteDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -300,6 +314,10 @@
     <ProjectReference Include="..\DodgingBranches.Models\DodgingBranches.Models.csproj">
       <Project>{e428b791-1cdb-4e56-9afc-7dc46df622d6}</Project>
       <Name>DodgingBranches.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DodgingBranches.Service\DodgingBranches.Service.csproj">
+      <Project>{d6b25162-35aa-4bbe-96ab-3b7c140e3f69}</Project>
+      <Name>DodgingBranches.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

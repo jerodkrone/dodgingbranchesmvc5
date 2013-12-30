@@ -43,6 +43,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DodgingBranches.Data\DodgingBranches.Data.csproj">
+      <Project>{fa5f9b6d-81a4-4c31-b758-59a32e0c9ff5}</Project>
+      <Name>DodgingBranches.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DodgingBranches.Models\DodgingBranches.Models.csproj">
       <Project>{e428b791-1cdb-4e56-9afc-7dc46df622d6}</Project>
       <Name>DodgingBranches.Models</Name>

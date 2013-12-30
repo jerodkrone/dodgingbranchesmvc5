@@ -9,8 +9,9 @@ namespace DodgingBranchesMVC5.Models
     {
         public int Id { get; set; }
         public string CommentText { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int RouteId { get; set; }
         public int? ParentCommentId { get; set; }
+        public DateTime DateEntered { get; set; }
     }
 }

@@ -1,29 +1,46 @@
-﻿using DodgingBranches.Data;
-using DodgingBranches.Models;
+﻿using DodgingBranches.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using DodgingBranches.Data;
 
 namespace DodgingBranches.Service
 {
     public interface IRouteService
     {
-        List<Route> GetRoutesForUser(ApplicationUser user);
+        List<DodgingBranches.Models.Route> GetDefaultRoutesForUser(string userId);
+        void AddRoute(DodgingBranches.Models.Route route);
+        Models.Route GetRoute(int id);
 
     }
     public class RouteService : IRouteService
     {
-        public RouteService(IRouteRepository _routeRepo)
+        IRouteRepository _routeRepo;
+        public RouteService(IRouteRepository routeRepo)
         {
-
+            _routeRepo = routeRepo;
         }
 
-        public List<Route> GetRoutesForUser(ApplicationUser user)
+        public List<DodgingBranches.Models.Route> GetDefaultRoutesForUser(string userId)
         {
-            throw new NotImplementedException();
+            return _routeRepo.GetRoutesForLocation(0, 0);
+        }
+
+
+        public void AddRoute(Models.Route route)
+        {
+            _routeRepo.AddRoute(route);
+        }
+
+        public DodgingBranches.Models.Route GetRoute(int id)
+        {
+            DodgingBranches.Models.Route returnRoute = new Models.Route();
+
+            returnRoute = _routeRepo.GetRoute(id);
+
+            return returnRoute;
         }
     }
 }

@@ -33,21 +33,21 @@
             <div>
                 <div style="float:left;padding-right:10px">
                     <div>
-                        <div class="ui-icon ui-icon-arrowthick-1-n"></div>
-                        <span>@item.Score</span>
-                        <div class="ui-icon ui-icon-arrowthick-1-s"></div>
+                        <div class="fa fa-chevron-up fa-2"></div>
+                        <span class="routeScore">@item.Score</span>
+                        <div class="fa fa-chevron-down fa-2"></div>
                     </div>
                 </div>
                 <div style="display:inline-block">
                     <div style="">
-                        <span>@item.Name (map)</span>
+                         @Html.ActionLink(@item.Name, "RouteDetails", new {id=item.Id })<span> (map)</span>
                     </div>
 
                     <div>
                         <span>@item.Description</span>
                     </div>
                     <div>
-                        <span>posted @item.DateEntered.ToString("MM/dd/yyyy") by @item.EnteredBy.UserName</span>
+                        <span>posted @item.DateEntered.ToString("MM/dd/yyyy") by @item.EnteredBy</span>
                     </div>
                     <span>comments(@item.Comments.Count)</span>
                     <div>

@@ -8,9 +8,10 @@ namespace DodgingBranchesMVC5.Models
 {
     public class AddressViewModel
     {
-        public string Addr { get; set; }
+        public int AddressId { get; set; }
+        public string AddressLine1 { get; set; }
         public string City { get; set; }
-        public int Zip { get; set; }
+        public int ZipCode { get; set; }
         public string State { get; set; }
     }
 }

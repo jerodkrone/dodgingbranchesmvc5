@@ -8,6 +8,14 @@ namespace DodgingBranches.Models
 {
     public class Route
     {
+        public Route()
+        {
+            StartLocation = new Address();
+            EndLocation = new Address();
+            StartPoint = new MapPoint();
+            EndPoint = new MapPoint();
+        }
+
         public int RouteId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -16,7 +24,7 @@ namespace DodgingBranches.Models
         public MapPoint StartPoint { get; set; }
         public MapPoint EndPoint { get; set; }
         public DateTime DateEntered { get; set; }
-        public ApplicationUser EnteredBy { get; set; }
+        public string UserId { get; set; }
         public virtual List<Comment> Comments { get; set; }
         public virtual List<Tag> Tags { get; set; }
 
@@ -33,16 +41,17 @@ namespace DodgingBranches.Models
 
     public class MapPoint
     {
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 
     public class Comment
     {
         public int CommentId { get; set; }
         public String CommentText { get; set; }
-        public int MyProperty { get; set; }
-        public ApplicationUser EnteredBy { get; set; }
+        public int RouteId { get; set; }
+        public string UserId { get; set; }
+        public DateTime DateEntered { get; set; }
         public int? ParentCommentId { get; set; }
     }
 

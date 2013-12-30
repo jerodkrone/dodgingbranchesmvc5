@@ -72,6 +72,12 @@ input[type="checkbox"].input-validation-error {
     border: 0px none;
 }
 
+.routeScore {
+    display:block;
+    text-align:center;
+    margin-bottom: -5px;
+    margin-top: -5px
+}
 @media (max-width: 767px) {
     .homeText 
     {

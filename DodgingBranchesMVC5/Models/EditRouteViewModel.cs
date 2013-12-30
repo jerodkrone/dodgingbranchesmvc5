@@ -10,8 +10,10 @@ namespace DodgingBranchesMVC5.Models
         public EditRouteViewModel()
         {
             Addr = new AddressEntryViewModel();
+            EndAddr = new AddressEntryViewModel();
         }
 
         public AddressEntryViewModel Addr { get; set; }
+        public AddressEntryViewModel EndAddr { get; set; }
     }
 }

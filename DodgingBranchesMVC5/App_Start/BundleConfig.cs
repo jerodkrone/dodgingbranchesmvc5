@@ -25,7 +25,8 @@ namespace DodgingBranchesMVC5
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/font-awesome.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/dodgingbranches").Include(
                 "~/Scripts/dodgingbranches/dodgingbranches.js"));

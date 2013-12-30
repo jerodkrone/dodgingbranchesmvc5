@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
+using DodgingBranches.Service;
 
 namespace DodgingBranchesMVC5.Controllers
 {
@@ -15,7 +16,7 @@ namespace DodgingBranchesMVC5.Controllers
 
         private readonly IRouteMapper _mapper; 
 
-        public RouteController(IRouteMapper mapper)
+        public RouteController(IRouteMapper mapper, IRouteService routeService)
         {
             _mapper = mapper;
         }
@@ -30,7 +31,7 @@ namespace DodgingBranchesMVC5.Controllers
         {
             var model = new RoutesViewModel();
 
-            model = _mapper.MapDomainToModel();
+            model = _mapper.MapDomainToModel(User);
 
             return View(model);
         }
@@ -40,7 +41,7 @@ namespace DodgingBranchesMVC5.Controllers
         {
             var model = new EditRouteViewModel();
 
-            model = new RouteMapper().MapEditDomainToModel(model);
+            model = _mapper.MapEditDomainToModel(model);
 
             return View(model);
         }
@@ -57,6 +58,13 @@ namespace DodgingBranchesMVC5.Controllers
             }
 
             return RedirectToAction("Create");
+        }
+
+        public ActionResult RouteDetails(int id)
+        {
+            var model = _mapper.MapDetailsDomainToViewModel(id);
+
+            return View(model);
         }
 	}
 }
